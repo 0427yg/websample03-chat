@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatConnect - 管理者パネル</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">💬 ChatConnect</div>
+            <ul class="nav-links">
+                <li><a href="/mypage">マイページ</a></li>
+                <li><a href="/chat">チャット</a></li>
+                <li><a href="/admin" class="active">管理者</a></li>
+            </ul>
+            <div class="nav-right">
+                <span id="user-name" class="user-badge"></span>
+                <button id="logout-btn" class="btn btn-outline btn-sm">ログアウト</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="page-container">
+            <h2>管理者パネル</h2>
+            <p class="section-subtitle">会員情報の閲覧・編集・削除が行えます</p>
+
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <span class="stat-number" id="total-users">0</span>
+                    <span class="stat-label">総会員数</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="admin-count">0</span>
+                    <span class="stat-label">管理者</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number" id="member-count">0</span>
+                    <span class="stat-label">一般会員</span>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>名前</th>
+                            <th>メールアドレス</th>
+                            <th>権限</th>
+                            <th>登録日</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-table-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- 編集モーダル -->
+    <div id="edit-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>会員情報の編集</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="edit-user-id">
+                <div class="form-group">
+                    <label for="edit-user-name">名前</label>
+                    <input type="text" id="edit-user-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-user-email">メールアドレス</label>
+                    <input type="email" id="edit-user-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-user-role">権限</label>
+                    <select id="edit-user-role">
+                        <option value="member">一般会員</option>
+                        <option value="admin">管理者</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" id="modal-cancel">キャンセル</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

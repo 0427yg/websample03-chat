@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatConnect - チャット</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">💬 ChatConnect</div>
+            <ul class="nav-links">
+                <li><a href="/mypage">マイページ</a></li>
+                <li><a href="/chat" class="active">チャット</a></li>
+                <li id="admin-link" style="display:none;"><a href="/admin">管理者</a></li>
+            </ul>
+            <div class="nav-right">
+                <span id="user-name" class="user-badge"></span>
+                <button id="logout-btn" class="btn btn-outline btn-sm">ログアウト</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="chat-layout">
+        <!-- サイドバー -->
+        <aside class="chat-sidebar">
+            <div class="sidebar-section">
+                <h3>チャットルーム</h3>
+                <ul id="room-list" class="room-list"></ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>ダイレクトメッセージ</h3>
+                <div class="dm-search">
+                    <input type="text" id="user-search-input" placeholder="メールアドレスで検索..." class="dm-search-input">
+                    <ul id="search-results" class="search-results" style="display:none;"></ul>
+                </div>
+                <ul id="dm-list" class="dm-list"></ul>
+            </div>
+            <div class="sidebar-section">
+                <h3>オンライン <span id="online-count" class="online-count">0</span></h3>
+                <ul id="online-users" class="online-list"></ul>
+            </div>
+        </aside>
+
+        <!-- チャットエリア -->
+        <div class="chat-main">
+            <div class="chat-header">
+                <h3 id="room-name">ルームを選択してください</h3>
+            </div>
+            <div class="chat-messages" id="chat-messages">
+                <div class="chat-welcome">
+                    <p>💬 左のルーム一覧からチャットルームを選んでください</p>
+                </div>
+            </div>
+            <div class="chat-input-area" id="chat-input-area" style="display:none;">
+                <div id="typing-indicator" class="typing-indicator" style="display:none;">
+                    <span></span> さんが入力中...
+                </div>
+                <form id="messageForm" class="message-form">
+                    <input type="text" id="message-input" placeholder="メッセージを入力..." autocomplete="off" required>
+                    <button type="submit" class="btn btn-primary">送信</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>

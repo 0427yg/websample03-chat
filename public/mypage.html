@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatConnect - マイページ</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">💬 ChatConnect</div>
+            <ul class="nav-links">
+                <li><a href="/mypage" class="active">マイページ</a></li>
+                <li><a href="/chat">チャット</a></li>
+                <li id="admin-link" style="display:none;"><a href="/admin">管理者</a></li>
+            </ul>
+            <div class="nav-right">
+                <span id="user-name" class="user-badge"></span>
+                <button id="logout-btn" class="btn btn-outline btn-sm">ログアウト</button>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <div class="page-container">
+            <h2>マイページ</h2>
+
+            <div class="profile-card">
+                <div class="profile-avatar" id="profile-avatar">?</div>
+                <div class="profile-details">
+                    <h3 id="profile-name">-</h3>
+                    <p id="profile-email">-</p>
+                    <span id="profile-role" class="badge">-</span>
+                    <p class="profile-date">登録日: <span id="profile-date">-</span></p>
+                </div>
+            </div>
+
+            <div class="edit-section">
+                <h3>プロフィール編集</h3>
+                <form id="profileForm">
+                    <div class="form-group">
+                        <label for="edit-name">名前</label>
+                        <input type="text" id="edit-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-email">メールアドレス</label>
+                        <input type="email" id="edit-email" required>
+                    </div>
+                    <div id="profile-message" class="success-message" style="display:none;"></div>
+                    <div id="profile-error" class="error-message" style="display:none;"></div>
+                    <button type="submit" class="btn btn-primary">更新する</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/mypage.js"></script>
+</body>
+</html>
