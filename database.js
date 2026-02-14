@@ -64,6 +64,8 @@ if (roomCount === 0) {
   insertRoom.run('一般', 'みんなで自由に話しましょう');
   insertRoom.run('雑談', '気軽な雑談はこちら');
   insertRoom.run('質問・相談', '困りごとを相談できます');
+  insertRoom.run('技術情報', '開発技術や技術情報の共有');
+  insertRoom.run('ニュース', '業界ニュースや情報交換');
 }
 
 // 管理者アカウント作成（初回のみ）
