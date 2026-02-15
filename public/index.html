@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1e293b">
+    <meta name="description" content="ChatConnect - リアルタイムチャットアプリ">
     <title>ChatConnect - ログイン / 会員登録</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="auth-page">
@@ -69,5 +73,15 @@
     </div>
 
     <script src="js/auth.js"></script>
+    <script>
+        // Service Worker 登録
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registered:', reg.scope))
+                    .catch(err => console.error('Service Worker registration failed:', err));
+            });
+        }
+    </script>
 </body>
 </html>
