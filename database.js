@@ -58,15 +58,26 @@ db.exec(`
 `);
 
 // ===== 初期データ =====
-const roomCount = db.prepare('SELECT COUNT(*) as count FROM rooms').get().count;
-if (roomCount === 0) {
-  const insertRoom = db.prepare('INSERT INTO rooms (name, description) VALUES (?, ?)');
-  insertRoom.run('一般', 'みんなで自由に話しましょう');
-  insertRoom.run('雑談', '気軽な雑談はこちら');
-  insertRoom.run('質問・相談', '困りごとを相談できます');
-  insertRoom.run('技術情報', '開発技術や技術情報の共有');
-  insertRoom.run('ニュース', '業界ニュースや情報交換');
-}
+// 必要なルーム一覧
+const requiredRooms = [
+  { name: '一般', description: 'みんなで自由に話しましょう' },
+  { name: '雑談', description: '気軽な雑談はこちら' },
+  { name: '質問・相談', description: '困りごとを相談できます' },
+  { name: '技術情報', description: '開発技術や技術情報の共有' },
+  { name: 'ニュース', description: '業界ニュースや情報交換' }
+];
+
+// 既存のルーム名を取得
+const existingRooms = db.prepare('SELECT name FROM rooms').all().map(r => r.name);
+
+// ないルームだけ追加
+const insertRoom = db.prepare('INSERT INTO rooms (name, description) VALUES (?, ?)');
+requiredRooms.forEach(room => {
+  if (!existingRooms.includes(room.name)) {
+    insertRoom.run(room.name, room.description);
+    console.log(`✅ ルーム追加: ${room.name}`);
+  }
+});
 
 // 管理者アカウント作成（初回のみ）
 const adminCount = db.prepare("SELECT COUNT(*) as count FROM users WHERE role = 'admin'").get().count;
