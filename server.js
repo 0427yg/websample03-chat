@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const http = require('http');
 const { Server } = require('socket.io');
 const path = require('path');
@@ -7,11 +8,34 @@ const db = require('./database');
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server);
+
+// CORS設定（デスクトップアプリ対応）
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    // originがない場合（同一オリジン）またはリストに含まれる場合は許可
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, true); // デスクトップアプリのため全オリジン許可
+    }
+  },
+  credentials: true
+};
+
+const io = new Server(server, {
+  cors: corsOptions
+});
 
 const PORT = 3000;
 
 // ===== ミドルウェア =====
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -20,8 +44,14 @@ const sessionMiddleware = session({
   secret: 'chat-app-secret-key-2026',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 24時間
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000, // 24時間
+    sameSite: 'none',
+    secure: true
+  },
+  proxy: true
 });
+app.set('trust proxy', 1);
 app.use(sessionMiddleware);
 
 // Socket.io にセッションを共有
