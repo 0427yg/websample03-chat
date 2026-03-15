@@ -32,7 +32,8 @@ const io = new Server(server, {
   cors: corsOptions
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // ===== ミドルウェア =====
 app.use(cors(corsOptions));
@@ -46,12 +47,12 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   cookie: {
     maxAge: 24 * 60 * 60 * 1000, // 24時間
-    sameSite: 'none',
-    secure: true
+    sameSite: isProduction ? 'none' : 'lax',
+    secure: isProduction
   },
-  proxy: true
+  ...(isProduction && { proxy: true })
 });
-app.set('trust proxy', 1);
+if (isProduction) app.set('trust proxy', 1);
 app.use(sessionMiddleware);
 
 // Socket.io にセッションを共有
